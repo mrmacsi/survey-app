@@ -1,10 +1,11 @@
 import React, { Component,Fragment  } from "react";
+import { Navbar, NavItem /*, SideNav, SideNavItem, Button  */} from 'react-materialize'
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import Payments from './Payments';
 
 class Header extends Component {
-  renterContent() {
+  renderContent() {
     switch (this.props.auth) {
       case null:
         return "still deciding";
@@ -13,24 +14,32 @@ class Header extends Component {
       default:
         return (
         <Fragment> 
-          <li><Payments/></li>
-          <li style={{margin:'0 10px'}}>Credits : {this.props.auth.credits}</li>
-          <li><a href="/api/logout">Logout</a></li>
+          <NavItem href="#"><Payments/></NavItem>
+          <NavItem href="#">Credits : {this.props.auth.credits}</NavItem>
+          <NavItem href="/api/logout">Logout</NavItem>
         </Fragment>);
     }
   }
+  renderNav(){
+    return (
+      <Navbar brand='Maxi' href={this.props.auth ? '/surveys':'/'}  right>
+        {this.renderContent()}
+      </Navbar>
+    )
+  }
   render() {
     return (
-      <nav>
-        <div className="nav-wrapper">
-          <Link to={this.props.auth ? '/surveys':'/'} 
-          className="left brand-logo">Maxi</Link>
-          <ul className="right">{this.renterContent()}</ul>
-        </div>
-      </nav>
+      <div>
+        {this.renderNav()}
+      </div>
     );
   }
 }
+
+const options = {
+  transform: "translateX(-100%)"
+};
+
 
 function mapStateToProps({ auth }) {
   return { auth };
