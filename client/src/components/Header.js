@@ -36,11 +36,6 @@ class Header extends Component {
   }
 }
 
-const options = {
-  transform: "translateX(-100%)"
-};
-
-
 function mapStateToProps({ auth }) {
   return { auth };
 }

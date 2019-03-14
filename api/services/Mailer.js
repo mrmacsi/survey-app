@@ -1,7 +1,8 @@
 
 const helper = require("sendgrid").mail;
-const keys = require("../config/keys");
+const keys = require("../../config/keys");
 const sendgrid = require("sendgrid")(keys.sendGridKey);
+
 class Mailer extends helper.Mail {
   constructor({ subject, recipients }, content) {
     super(); //use the all dependancies of the parent class
