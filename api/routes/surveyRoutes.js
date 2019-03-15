@@ -4,20 +4,19 @@ const { URL } = require("url");
 const mongoose = require("mongoose");
 const requireLogin = require("../middlewares/requireLogin");
 const requireCredits = require("../middlewares/requireCredits");
-const Mailer = require("../services/Mailer");
-const surveyTemplate = require("../services/emailTemplates/surveyTemplate");
-
-const Survey = mongoose.model("surveys");
+const Survey = mongoose.model("Survey");
+const surveyController = require('../controllers/SurveyController');
 
 module.exports = app => {
-  app.get("/api/surveys", requireLogin, async (req, res) => {
-    const surveys = await Survey.find({ user: req.user.id })
-      .select({
-        recipients: false
-      })
-      .sort({ dateCreated: "desc" });
-    res.send(surveys);
-  });
+
+  app.route("/api/surveys")
+  .get(requireLogin, surveyController.list_all_surveys)
+  .post(requireLogin, surveyController.create_survey);
+
+  app.route('/api/surveys/:surveyId')
+    .get(requireLogin,surveyController.read_a_survey)
+    .put(requireLogin,surveyController.update_a_survey)
+    .delete(requireLogin,surveyController.delete_a_survey);
 
   app.get("/api/surveys/:surveyId/:choice", (req, res) => {
     res.send("Thanks for voting!");
@@ -52,60 +51,5 @@ module.exports = app => {
       })
       .value(); //get the result
     res.send({});
-  });
-
-  app.post("/api/surveys", requireLogin, requireCredits, async (req, res) => {
-    const { title, subject, body, recipients } = req.body;
-    const survey = new Survey({
-      title,
-      subject,
-      body,
-      recipients: recipients.split(",").map(email => ({ email: email.trim() })),
-      user: req.user.id,
-      dateCreated: Date.now()
-    });
-
-    //send email
-    const mailer = new Mailer(survey, surveyTemplate(survey));
-
-    try {
-      await mailer.send();
-      await survey.save();
-
-      req.user.credits -= 1;
-      const user = await req.user.save();
-
-      res.send(user);
-    } catch (error) {
-      res.status(422).send(err);
-    }
-  });
-
-
-  app.patch("/api/surveys/{}", requireLogin, async (req, res) => {
-    const { title, subject, body, recipients } = req.body;
-    const survey = new Survey({
-      title,
-      subject,
-      body,
-      recipients: recipients.split(",").map(email => ({ email: email.trim() })),
-      user: req.user.id,
-      dateCreated: Date.now()
-    });
-
-    //send email
-    const mailer = new Mailer(survey, surveyTemplate(survey));
-
-    try {
-      await mailer.send();
-      await survey.save();
-
-      req.user.credits -= 1;
-      const user = await req.user.save();
-
-      res.send(user);
-    } catch (error) {
-      res.status(422).send(err);
-    }
   });
 };
