@@ -3,9 +3,8 @@ import { reduxForm, Field } from "redux-form";
 import SurveyField from "./SurveyFields";
 import { Link } from "react-router-dom";
 import _ from "lodash";
-import validateEmails from "../../utils/validateEmails";
 import FIELDS from "../surveys/formFields";
-
+import validate from "../../utils/validateForm";
 class SurveyForm extends Component {
   renderFields() {
     return _.map(FIELDS, ({ label, name }) => {
@@ -36,22 +35,6 @@ class SurveyForm extends Component {
       </div>
     );
   }
-}
-
-function validate(values) {
-  const errors = {};
-
-  _.each(FIELDS, ({ name }) => {
-    if (!values[name]) {
-      errors[name] = "Please enter a " + name + " value.";
-    }
-  });
-
-  if (!errors.recipients) {
-    errors.recipients = validateEmails(values.recipients);
-  }
-
-  return errors;
 }
 
 export default reduxForm({

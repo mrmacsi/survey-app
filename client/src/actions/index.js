@@ -23,3 +23,9 @@ export const fetchSurveys = () => async dispatch => {
   console.log(res);
   dispatch({ type: FETCH_SURVEYS, payload: res.data });
 };
+
+export const fetchSingleSurvey = (surveyId) => async dispatch => {
+  const res = await axios.get("/api/survey/"+surveyId);
+  console.log(res.data)
+  dispatch({ type: FETCH_SURVEYS, payload: res.data });
+};

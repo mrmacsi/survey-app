@@ -11,9 +11,9 @@ module.exports = app => {
 
   app.route("/api/surveys")
   .get(requireLogin, surveyController.list_all_surveys)
-  .post(requireLogin, surveyController.create_survey);
+  .post(requireLogin,requireCredits, surveyController.create_survey);
 
-  app.route('/api/surveys/:surveyId')
+  app.route('/api/survey/:surveyId')
     .get(requireLogin,surveyController.read_a_survey)
     .put(requireLogin,surveyController.update_a_survey)
     .delete(requireLogin,surveyController.delete_a_survey);

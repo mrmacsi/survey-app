@@ -9,7 +9,6 @@ module.exports = {
   list_all_surveys: async function(req, res) {
     await Survey.find({ user: req.user.id })
       .select({
-        recipients: false,
         __v: false
       })
       .sort({ dateCreated: "desc" })
