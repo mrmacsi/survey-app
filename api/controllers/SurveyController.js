@@ -13,7 +13,7 @@ module.exports = {
       })
       .sort({ dateCreated: "desc" })
       .exec(function(err, surveys) {
-        if (err) res.send(err);
+        if (err) res.status(422).send(err);
         res.json(surveys);
       });
   },
@@ -39,8 +39,8 @@ module.exports = {
       const user = await req.user.save();
 
       res.send(user);
-    } catch (error) {
-      res.status(422).send(err);
+    } catch (err) {
+      res.status(422).send(err);//send unprocessable entity error
     }
   },
   read_a_survey: (req, res) => {
@@ -48,30 +48,32 @@ module.exports = {
       { user: req.user.id, _id: req.params.surveyId },
       { __v: false },
       function(err, survey) {
-        if (err) res.send(err);
+        if (err) res.status(422).send(err);
         res.json(survey);
       }
     );
   },
   update_a_survey: (req, res) => {
+    const {recipients} = req.body;
+    const survey = { ...req.body, recipients:recipients.split(",").map(email => ({ email: email.trim() })) };
     Survey.findOneAndUpdate(
       { user: req.user.id, _id: req.params.surveyId },
-      req.body,
+      survey,
       { new: true },
       function(err, survey) {
-        if (err) res.send(err);
+        if (err) res.status(422).send(err.message);
         res.json(survey);
       }
     );
   },
   delete_a_survey: (req, res) => {
-    Survey.deleteOne(
+    Survey.findOneAndDelete(
       {
         user: req.user.id,
         _id: req.params.surveyId
       },
       function(err, survey) {
-        if (err) res.send(err);
+        if (err) res.status(422).send(err);
         res.json({ message: "Survey successfully deleted" });
       }
     );

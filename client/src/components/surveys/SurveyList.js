@@ -15,6 +15,7 @@ class SurveyList extends Component {
           <div className="card-content">
             <div className="right">
             <Dropdown trigger={
+              // eslint-disable-next-line
               <a href="#"><Icon>more_vert</Icon></a>
               }>
               <li><NavLink to={"/survey/edit/"+survey._id}>Edit</NavLink></li>

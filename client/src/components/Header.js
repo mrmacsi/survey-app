@@ -1,7 +1,6 @@
 import React, { Component,Fragment  } from "react";
 import { Navbar, NavItem /*, SideNav, SideNavItem, Button  */} from 'react-materialize'
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import Payments from './Payments';
 
 class Header extends Component {
@@ -14,7 +13,7 @@ class Header extends Component {
       default:
         return (
         <Fragment> 
-          <NavItem><Payments/></NavItem>
+          <li style={{padding : "0 32px"}}><Payments/></li>
           <NavItem>Credits : {this.props.auth.credits}</NavItem>
           <NavItem href="/api/logout">Logout</NavItem>
         </Fragment>);
