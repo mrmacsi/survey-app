@@ -6,9 +6,9 @@ export default (state = null, action) => {
       if(action.payload){
         return action.payload;
       }else if(action.payload===""){
-        return null;
-      }else{
         return false;
+      }else{
+        return null;
       }
     default:
       return state;

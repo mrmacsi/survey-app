@@ -5,7 +5,6 @@ import validate from "../../utils/validateForm";
 import _ from "lodash";
 import FIELDS from "../surveys/formFields";
 import SurveyField from "./SurveyFields";
-import { withRouter } from "react-router-dom";
 import * as actions from "../../actions";
 import ShowMessage from "../ShowMessage";
 import Redirect from "react-dom";
@@ -142,5 +141,5 @@ export default connect(
   reduxForm({
     form: "surveyEditForm",
     validate
-  })(withRouter(SurveyEdit))
+  })(SurveyEdit)
 );
