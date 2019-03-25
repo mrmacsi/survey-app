@@ -8,9 +8,15 @@ import Landing from './Landing';
 import Dashboard from './Dashboard';
 import SurveyNew from './surveys/SurveyNew';
 import SurveyEdit from "./surveys/SurveyEdit";
+import SurveyShow from "./surveys/SurveyShow";
+import RequireAuth from './RequireAuth';
+import RequireNotAuth from './RequireNotAuth';
+import Login from "./Login";
 
 class App extends Component {
-  componentDidMount() {
+
+  componentWillMount() {
+    //console.log("componentWillMount")
     this.props.fetchUser();
   }
 
@@ -21,10 +27,12 @@ class App extends Component {
           <div>
             <Header />
             <div className="container">
+              <Route exact path="/login" component={RequireNotAuth(Login)} />
               <Route exact path="/" component={Landing} />
-              <Route exact path="/surveys" component={Dashboard} />
-              <Route path="/surveys/new" component={SurveyNew} />
-              <Route path="/survey/edit/:surveyId" component={SurveyEdit} />
+              <Route exact path="/surveys" component={RequireAuth(Dashboard)} />
+              <Route path="/surveys/new" component={RequireAuth(SurveyNew)} />
+              <Route path="/survey/show/:surveyId" component={RequireAuth(SurveyShow)} />
+              <Route path="/survey/edit/:surveyId" component={RequireAuth(SurveyEdit)} />
             </div>
           </div>
         </BrowserRouter>

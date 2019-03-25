@@ -5,7 +5,7 @@ import { Icon,NavItem,Dropdown /*, SideNav, SideNavItem, Button  */} from 'react
 import { NavLink } from "react-router-dom";
 
 class SurveyList extends Component {
-  componentDidMount() {
+  componentWillMount() {
     this.props.fetchSurveys();
   }
   renderSurveys() {
@@ -23,7 +23,7 @@ class SurveyList extends Component {
               <NavItem>See Details</NavItem>
             </Dropdown>
             </div>
-            <span className="card-title">{survey.title}</span>
+            <span className="card-title"><NavLink to={"/survey/show/"+survey._id}>{survey.title}</NavLink></span>
             <p>{survey.body}</p>
             <p className="right">
               Sent On: {new Date(survey.dateCreated).toLocaleDateString()}

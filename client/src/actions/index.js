@@ -1,8 +1,9 @@
 import axios from "axios";
-import { FETCH_USER, FETCH_SURVEYS,FETCH_SURVEYS_ERROR } from "./types";
+import { FETCH_USER, FETCH_SURVEYS, FETCH_SURVEYS_ERROR, FETCH_SINGLE_SURVEY } from "./types";
 
 export const fetchUser = () => async dispatch => {
-  const res = await axios.get("/api/current_user");
+  const res = await axios.get("/api/me");
+  console.log(res)
   dispatch({ type: FETCH_USER, payload: res.data });
 };
 
@@ -21,23 +22,18 @@ export const submitSurvey = (values, history) => async dispatch => {
 export const editSurvey = (surveyId, values) => async dispatch => {
   return await axios.put("/api/survey/"+surveyId,values).then(response =>{
     console.log(response.data);
-    //dispatch(fetchSurveysSuccess(response.data))
+    //dispatch(fetchSurveySuccess(response.data))
+    
     return response.data;
   }).catch(err =>{
     console.log(err);
     throw err
   })
-  /* const request = await axios.put("/api/survey/"+surveyId, values)
-    console.log(request)
-  return request.then(
-    response => {console.log(response);dispatch(fetchSurveysSuccess(response.data))},
-    err => { console.log(err);throw err }
-  ); */
 };
 
-export function fetchSurveysSuccess(surveys) {
+export function fetchSurveySuccess(surveys) {
 	return {
-		type: FETCH_SURVEYS,
+		type: FETCH_SINGLE_SURVEY,
 		payload: surveys
 	};
 }
@@ -56,7 +52,13 @@ export const fetchSurveys = () => async dispatch => {
 };
 
 export const fetchSingleSurvey = (surveyId) => async dispatch => {
-  const res = await axios.get("/api/survey/"+surveyId);
-  console.log(res.data)
-  dispatch({ type: FETCH_SURVEYS, payload: res.data });
+  return await axios.get("/api/survey/"+surveyId).then(response =>{
+    console.log(response.data);
+    dispatch({ type: FETCH_SINGLE_SURVEY, payload: response.data });
+    
+    return response.data;
+  }).catch(err =>{
+    console.log(err);
+    throw err
+  })
 };

@@ -7,7 +7,7 @@ const surveyTemplate = require("../services/emailTemplates/surveyTemplate");
 
 module.exports = {
   list_all_surveys: async function(req, res) {
-    await Survey.find({ user: req.user.id })
+    Survey.find({ user: req.user.id })
       .select({
         __v: false
       })
@@ -44,7 +44,7 @@ module.exports = {
     }
   },
   read_a_survey: (req, res) => {
-    Survey.find(
+    Survey.findOne(
       { user: req.user.id, _id: req.params.surveyId },
       { __v: false },
       function(err, survey) {

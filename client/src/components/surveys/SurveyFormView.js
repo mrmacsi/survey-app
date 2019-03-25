@@ -5,7 +5,7 @@ import FIELDS from "../surveys/formFields";
 import * as actions from "../../actions";
 import { withRouter } from "react-router-dom";
 
-const SurveyReview = ({ onCancel, formValues, submitSurvey, history }) => {
+const SurveyFormView = ({ onCancel, formValues, submitSurvey, history }) => {
   const reviewFields = _.map(FIELDS, ({ label, name }) => {
     return (
       <div key={name}>
@@ -42,4 +42,4 @@ function mapStateToProps(state) {
 export default connect(
   mapStateToProps,
   actions
-)(withRouter(SurveyReview));
+)(withRouter(SurveyFormView));
