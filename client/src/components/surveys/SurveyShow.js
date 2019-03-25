@@ -4,7 +4,7 @@ import _ from "lodash";
 import FIELDS from "../surveys/formFields";
 import * as actions from "../../actions";
 import ShowMessage from "../ShowMessage";
-import { NavLink } from "react-router-dom/cjs/react-router-dom";
+import { NavLink } from "react-router-dom";
 
 class SurveyShow extends Component {
   //state for message show
@@ -45,16 +45,16 @@ class SurveyShow extends Component {
     return _.map(FIELDS, ({ label, name }) => {
       if (name !== "recipients") {
         return (
-          <div>
+          <div key={name}>
             <label>{label}</label>
-            <div key={name} className="collection">
+            <div className="collection">
               <div className="collection-item">{survey[name]}</div>
             </div>
           </div>
         );
       } else {
         return (
-          <div>
+          <div key={name}>
             <label>{label}</label>
             <div className="collection">
               {_.map(survey[name], ({ responded, email }, key) => <div className="collection-item" key={key}> {email} : {responded ? "Yes" : "No"}</div>)}
@@ -73,17 +73,11 @@ class SurveyShow extends Component {
         <div>
           <h5>View your entry</h5>
           {this.renderFields()}
-          <button
-            className="yellow darken-3 btn-flat"
-            onClick={this.props.history.goBack}
-          >
-            Back
-          </button>
-          <NavLink
-            to={"/survey/edit/" + survey._id}
-            className="green right white-text btn-flat"
-          >
-            Edit Survey
+          <NavLink to={"/surveys"} className="yellow darken-3 white-text btn-flat">Back
+          <i className="material-icons left">keyboard_return</i>
+          </NavLink>
+          <NavLink to={"/survey/edit/" + survey._id}
+            className="green right white-text btn-flat">Edit Survey
             <i className="material-icons right">email</i>
           </NavLink>
         </div>

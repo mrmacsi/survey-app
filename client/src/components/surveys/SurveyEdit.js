@@ -7,7 +7,7 @@ import FIELDS from "../surveys/formFields";
 import SurveyField from "./SurveyFields";
 import * as actions from "../../actions";
 import ShowMessage from "../ShowMessage";
-import Redirect from "react-dom";
+import { NavLink } from "react-router-dom";
 
 class SurveyEdit extends Component {
   //state for message show
@@ -64,7 +64,7 @@ class SurveyEdit extends Component {
     //console.log(picked)
     const surveyId = this.props.match.params.surveyId;
     this.props.editSurvey(surveyId, picked).then((data) => {
-      return <Redirect to={"/survey/show/" + surveyId} />
+      this.props.history.push("/survey/show/"+surveyId)
     })
       .catch(err => {
         //console.log(err)
@@ -86,7 +86,9 @@ class SurveyEdit extends Component {
           <h5>Edit your entries</h5>
           <form onSubmit={this.props.handleSubmit((formValues) => this.handleSubmit(formValues))}>
             {this.renderFields()}
-            <button className="yellow darken-3 btn-flat" onClick={this.props.history.goBack}>Back</button>
+            <NavLink to={"/survey/show/"+survey._id} className="yellow darken-3 white-text btn-flat">Back
+              <i className="material-icons left">keyboard_return</i>
+            </NavLink>            
             <button className="green right white-text btn-flat">
               Edit Survey
               <i className="material-icons right">email</i>
