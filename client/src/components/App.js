@@ -12,6 +12,7 @@ import SurveyShow from "./surveys/SurveyShow";
 import RequireAuth from './RequireAuth';
 import RequireNotAuth from './RequireNotAuth';
 import Login from "./Login";
+import Footer from "./Footer";
 
 class App extends Component {
 
@@ -26,7 +27,7 @@ class App extends Component {
         <BrowserRouter>
           <div>
             <Header />
-            <div className="container">
+            <div className="container" style= {{marginTop:"40px"}}>
               <Route exact path="/login" component={RequireNotAuth(Login)} />
               <Route exact path="/" component={Landing} />
               <Route exact path="/surveys" component={RequireAuth(Dashboard)} />
@@ -34,6 +35,7 @@ class App extends Component {
               <Route path="/survey/show/:surveyId" component={RequireAuth(SurveyShow)} />
               <Route path="/survey/edit/:surveyId" component={RequireAuth(SurveyEdit)} />
             </div>
+            <Footer />
           </div>
         </BrowserRouter>
       </div>

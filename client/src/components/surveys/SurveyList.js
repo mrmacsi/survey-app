@@ -20,18 +20,18 @@ class SurveyList extends Component {
               }>
               <li><NavLink to={"/survey/edit/"+survey._id}>Edit</NavLink></li>
               <NavItem divider />
-              <NavItem>See Details</NavItem>
+              <li><NavLink to={"/survey/show/"+survey._id}>See Details</NavLink></li>
             </Dropdown>
             </div>
             <span className="card-title"><NavLink to={"/survey/show/"+survey._id}>{survey.title}</NavLink></span>
             <p>{survey.body}</p>
-            <p className="right">
-              Sent On: {new Date(survey.dateCreated).toLocaleDateString()}
-            </p>
           </div>
           <div className="card-action">
-            <span>Yes: {survey.yes}</span>
-            <span>No: {survey.no}</span>
+            <div className="row" style={{"marginBottom": "0px"}}>
+              <div className="col s1"><span>Yes: {survey.yes}</span></div>
+              <div className="col s1"><span>No: {survey.no}</span></div>
+              <div className="col s10 "><span className="right">Sent On: {new Date(survey.dateCreated).toLocaleDateString()}</span></div>
+            </div>
           </div>
         </div>
       );

@@ -86,7 +86,7 @@ class SurveyEdit extends Component {
           <h5>Edit your entries</h5>
           <form onSubmit={this.props.handleSubmit((formValues) => this.handleSubmit(formValues))}>
             {this.renderFields()}
-            <NavLink to={"/survey/show/"+survey._id} className="yellow darken-3 white-text btn-flat">Back
+            <NavLink to={  "/survey/show/"+survey._id} className="yellow darken-3 white-text btn-flat">Back
               <i className="material-icons left">keyboard_return</i>
             </NavLink>            
             <button className="green right white-text btn-flat">
