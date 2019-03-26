@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="page-footer" style={{marginTop:"40px"}}>
+    <footer className="page-footer site-footer" style={{marginTop:"40px"}}>
         <div className="container">
             <div className="row">
                 <div className="col l6 s12">
