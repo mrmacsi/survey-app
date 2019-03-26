@@ -70,17 +70,28 @@ class SurveyShow extends Component {
     const { survey } = this.props;
     if (survey) {
       return (
-        <div>
-          <h5>View your entry</h5>
-          {this.renderFields()}
-          <NavLink to={"/surveys"} className="yellow darken-3 white-text btn-flat">Back
-          <i className="material-icons left">keyboard_return</i>
-          </NavLink>
-          <NavLink to={"/survey/edit/" + survey._id}
-            className="green right white-text btn-flat">Edit Survey
-            <i className="material-icons right">email</i>
-          </NavLink>
+      <div className="row">
+        <div className="col s12 m12 l12">
+          <div className="card darken-1">
+            <div className="card-content">
+              <span className="card-title">View your entry</span>
+                <div className="card-action">
+                {this.renderFields()}
+                <div className="card-content">
+                <NavLink to={"/surveys"} className="yellow darken-3 white-text btn-flat">Back
+                  <i className="material-icons left">keyboard_return</i>
+                </NavLink>
+                <NavLink to={"/survey/edit/" + survey._id}
+                  className="green right white-text btn-flat">Edit Survey
+                  <i className="material-icons right">email</i>
+                </NavLink>
+                  </div>
+                </div>
+              <ShowMessage {...this.state.message} />
+            </div>
+          </div>
         </div>
+      </div>
       );
     } else if (!this.state.survey) {
       return (
